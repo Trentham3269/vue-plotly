@@ -38,6 +38,11 @@
 				class="fill-height"
 				fluid
 			>
+			<v-select
+				:items="options"
+				v-model="selected" 
+				outlined
+			></v-select>
 				<v-row
 					align="center"
 					justify="center"
@@ -67,21 +72,31 @@
 
 		methods: {
 			handleResize () {
-				this.console.log('Main windows updated')
+				this.console.log('Main windows updated');
+			},
+			getAxisX () {
+				if (this.selected === 'Entries') {
+					this.heatmap.traces[0].x = ['7-8am', '8-9am', '9-10am', '10-11am', '11-12am'];
+				} else if (this.selected === 'Exits') {
+					this.heatmap.traces[0].x = ['3-4pm', '4-5pm', '5-6pm', '6-7pm', '7-8pm'];
+				}
 			}
 		},
 
 		created () {
-			// this.$vuetify.theme.dark = true;
 			this.console = window.console;
 		},
 
 		mounted () {
-			window.addEventListener('resize', this.handleResize)
+			window.addEventListener('resize', this.handleResize);
+		},
+
+		beforeUpdate () {
+			this.getAxisX();
 		},
 
 		beforeDestroy () {
-			window.removeEventListener('resize', this.handleResize)
+			window.removeEventListener('resize', this.handleResize);
 		},
 
 		data: () => ({
@@ -91,7 +106,7 @@
 				traces: [
 					{
 						z: [[8, 20, 32, 12, 6], [13, 31, 9, 8, 3], [71, 17, 34, 18, 20], [67, 131, 19, 81, 33], [76, 75, 99, 67, 29], [78, 124, 99, 88, 44], [210, 189, 79, 58, 66]],
-						x: ['7-8am', '8-9am', '9-10am', '10-11am', '11-12am'],
+						x: [],
 						y: ['Adelaide', 'Brisbane', 'Canberra', 'Darwin', 'Melbourne', 'Perth', 'Sydney'],
 						type: 'heatmap',
 						hoverongaps: false
@@ -120,7 +135,9 @@
 						b: 40
 					}
 				}
-			}
+			},
+			options: ['Entries', 'Exits'],
+			selected: 'Entries'
 		})
 	};
 </script>
