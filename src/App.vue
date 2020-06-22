@@ -38,21 +38,36 @@
 				class="fill-height"
 				fluid
 			>
-			<v-select
-				:items="options"
-				v-model="selected" 
-				outlined
-			></v-select>
-				<v-row
-					align="center"
-					justify="center"
+			<v-row>
+				<v-col
+					cols="6"
 				>
-					<v-col class="shrink">
-						<PlotlyChart 
-							:chart="heatmap"
-						></PlotlyChart>
-					</v-col>
-				</v-row>
+					<v-select
+						:items="options"
+						v-model="option" 
+						outlined
+					></v-select>
+				</v-col>
+				<!-- <v-col
+					cols="6"
+				>
+					<v-select
+						:items="measures"
+						v-model="measure" 
+						outlined
+					></v-select>
+				</v-col> -->
+			</v-row>
+			<v-row
+				align="center"
+				justify="center"
+			>
+				<v-col class="shrink">
+					<PlotlyChart 
+						:chart="heatmap"
+					></PlotlyChart>
+				</v-col>
+			</v-row>
 			</v-container>
 		</v-main>
 
@@ -75,16 +90,27 @@
 				this.console.log('Main windows updated');
 			},
 			getAxisX () {
-				if (this.selected === 'Entries') {
-					this.heatmap.traces[0].x = ['7-8am', '8-9am', '9-10am', '10-11am', '11-12am'];
-				} else if (this.selected === 'Exits') {
-					this.heatmap.traces[0].x = ['3-4pm', '4-5pm', '5-6pm', '6-7pm', '7-8pm'];
+				if (this.option === 'Entries') {
+					this.heatmap.traces[0].x = x_entries;
+				} else if (this.option === 'Exits') {
+					this.heatmap.traces[0].x = x_exits;
+				}
+			},
+			getAxisY () {
+				this.heatmap.traces[0].y = y_axis;
+			},
+			getAxisZ () {
+				if (this.option === 'Entries') {
+					this.heatmap.traces[0].z = z_entries;
+				} else if (this.option === 'Exits') {
+					this.heatmap.traces[0].z = z_exits;
 				}
 			}
 		},
 
 		created () {
 			this.console = window.console;
+			this.getAxisY();
 		},
 
 		mounted () {
@@ -93,6 +119,7 @@
 
 		beforeUpdate () {
 			this.getAxisX();
+			this.getAxisZ();
 		},
 
 		beforeDestroy () {
@@ -105,9 +132,9 @@
 				uuid: "111",
 				traces: [
 					{
-						z: [[8, 20, 32, 12, 6], [13, 31, 9, 8, 3], [71, 17, 34, 18, 20], [67, 131, 19, 81, 33], [76, 75, 99, 67, 29], [78, 124, 99, 88, 44], [210, 189, 79, 58, 66]],
+						z: [],
 						x: [],
-						y: ['Adelaide', 'Brisbane', 'Canberra', 'Darwin', 'Melbourne', 'Perth', 'Sydney'],
+						y: [],
 						type: 'heatmap',
 						hoverongaps: false
 					}
@@ -137,7 +164,16 @@
 				}
 			},
 			options: ['Entries', 'Exits'],
-			selected: 'Entries'
+			option: 'Entries',
+			// measures: ['Headcount', 'Percentage'],
+			// measure: 'Headcount',
 		})
 	};
+
+	// Define data
+	var x_entries = ['7-8am', '8-9am', '9-10am', '10-11am', '11-12am'];
+	var x_exits = ['3-4pm', '4-5pm', '5-6pm', '6-7pm', '7-8pm'];
+	var y_axis = ['Adelaide', 'Brisbane', 'Canberra', 'Darwin', 'Melbourne', 'Perth', 'Sydney'];
+	var z_entries = [[8, 20, 32, 12, 6], [13, 31, 9, 8, 3], [71, 17, 34, 18, 20], [67, 131, 19, 81, 33], [76, 75, 99, 67, 29], [78, 124, 99, 88, 44], [210, 189, 79, 58, 66]];
+	var z_exits = [[210, 189, 79, 58, 66], [8, 20, 32, 12, 6], [13, 31, 9, 8, 3], [71, 17, 34, 18, 20], [67, 131, 19, 81, 33], [76, 75, 99, 67, 29], [78, 124, 99, 88, 44]];
 </script>
