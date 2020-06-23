@@ -1,6 +1,7 @@
 <template>
 	<v-app id="inspire">
 		<v-navigation-drawer
+			v-if="loggedIn === true"
 			v-model="drawer"
 			app
 			clipped
@@ -34,53 +35,69 @@
 		</v-app-bar>
 
 		<v-main>
-			<v-container
-				class="fill-height"
-				fluid
+			<template 
+				v-if="loggedIn === false"
 			>
-			<v-row>
-				<v-col
-					cols="4"
+				<v-container
+					
 				>
-					<v-select
-						:items="options"
-						v-model="option"
-						label="Select movement type" 
-						outlined
-					></v-select>
-				</v-col>
-				<v-col
-					cols="4"
-				>
-					<v-select
-						:items="measures"
-						v-model="measure"
-						label="Select measure"
-						outlined
-					></v-select>
-				</v-col>
-				<v-col
-					cols="4"
-				>
-					<v-select
-						:items="themes"
-						v-model="theme"
-						label="Select heatmap theme"
-						outlined
-					></v-select>
-				</v-col>
-			</v-row>
-			<v-row
-				align="center"
-				justify="center"
+					<LoginCard
+						@userLoggedIn="loggedIn = $event"
+					></LoginCard>
+				</v-container>
+			</template>
+
+			<template
+				v-else
 			>
-				<v-col>
-					<PlotlyChart 
-						:chart="heatmap"
-					></PlotlyChart>
-				</v-col>
-			</v-row>
-			</v-container>
+				<v-container
+					class="fill-height"
+					fluid
+				>
+				<v-row>
+					<v-col
+						cols="4"
+					>
+						<v-select
+							:items="options"
+							v-model="option"
+							label="Select movement type" 
+							outlined
+						></v-select>
+					</v-col>
+					<v-col
+						cols="4"
+					>
+						<v-select
+							:items="measures"
+							v-model="measure"
+							label="Select measure"
+							outlined
+						></v-select>
+					</v-col>
+					<v-col
+						cols="4"
+					>
+						<v-select
+							:items="themes"
+							v-model="theme"
+							label="Select heatmap theme"
+							outlined
+						></v-select>
+					</v-col>
+				</v-row>
+				<v-row
+					align="center"
+					justify="center"
+				>
+					<v-col>
+						<PlotlyChart 
+							:chart="heatmap"
+						></PlotlyChart>
+					</v-col>
+				</v-row>
+				</v-container>
+			</template>
 		</v-main>
 
 		<v-footer app>
@@ -91,12 +108,14 @@
 
 <script>
 	import PlotlyChart from './components/PlotlyChart';
+	import LoginCard from './components/LoginCard';
 	import EntriesCount from './components/EntriesCount';
 	import ExitsCount from './components/ExitsCount';
 
 	export default {
 		components: {
-			PlotlyChart
+			PlotlyChart,
+			LoginCard
 		},
 
 		methods: {
@@ -115,9 +134,9 @@
 			},
 			getAxisZ () {
 				if (this.option === 'Entries') {
-					this.heatmap.traces[0].z = this.z_entries.entries;
+					this.heatmap.traces[0].z = this.zEntries.count;
 				} else if (this.option === 'Exits') {
-					this.heatmap.traces[0].z = this.z_exits.exits;
+					this.heatmap.traces[0].z = this.zExits.count;
 				}
 			},
 			getTheme () {
@@ -145,7 +164,7 @@
 		},
 
 		data: () => ({
-			drawer: null,
+			drawer: false,
 			heatmap: {
 				uuid: "111",
 				traces: [
@@ -188,8 +207,9 @@
 			measure: 'Headcount',
 			themes: ['YlGnBu', 'RdBu', 'Greens', 'Greys', 'Electric', 'Earth', 'Portland', 'Picnic', 'Hot', 'YlOrRd'],
 			theme: 'YlGnBu',
-			z_entries: EntriesCount,
-			z_exits: ExitsCount
+			zEntries: EntriesCount,
+			zExits: ExitsCount,
+			loggedIn: false
 		})
 	};
 
