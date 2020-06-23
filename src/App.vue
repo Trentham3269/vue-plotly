@@ -91,6 +91,8 @@
 
 <script>
 	import PlotlyChart from './components/PlotlyChart';
+	import EntriesCount from './components/EntriesCount';
+	import ExitsCount from './components/ExitsCount';
 
 	export default {
 		components: {
@@ -113,9 +115,9 @@
 			},
 			getAxisZ () {
 				if (this.option === 'Entries') {
-					this.heatmap.traces[0].z = z_entries;
+					this.heatmap.traces[0].z = this.z_entries.entries;
 				} else if (this.option === 'Exits') {
-					this.heatmap.traces[0].z = z_exits;
+					this.heatmap.traces[0].z = this.z_exits.exits;
 				}
 			},
 			getTheme () {
@@ -185,7 +187,9 @@
 			measures: ['Headcount', 'Percentage'],
 			measure: 'Headcount',
 			themes: ['YlGnBu', 'RdBu', 'Greens', 'Greys', 'Electric', 'Earth', 'Portland', 'Picnic', 'Hot', 'YlOrRd'],
-			theme: 'YlGnBu'
+			theme: 'YlGnBu',
+			z_entries: EntriesCount,
+			z_exits: ExitsCount
 		})
 	};
 
@@ -193,6 +197,4 @@
 	var x_entries = ['7-8am', '8-9am', '9-10am', '10-11am', '11-12am'];
 	var x_exits = ['3-4pm', '4-5pm', '5-6pm', '6-7pm', '7-8pm'];
 	var y_axis = ['Adelaide', 'Brisbane', 'Canberra', 'Darwin', 'Melbourne', 'Perth', 'Sydney'];
-	var z_entries = [[8, 20, 32, 12, 6], [13, 31, 9, 8, 3], [71, 17, 34, 18, 20], [67, 131, 19, 81, 33], [76, 75, 99, 67, 29], [78, 124, 99, 88, 44], [144, 119, 79, 58, 66]];
-	var z_exits = [[21, 19, 85, 77, 32], [84, 120, 132, 121, 16], [13, 31, 9, 8, 3], [71, 17, 34, 18, 20], [67, 131, 19, 81, 33], [76, 75, 99, 67, 29], [78, 124, 99, 88, 44]];
 </script>
