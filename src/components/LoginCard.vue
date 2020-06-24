@@ -55,15 +55,15 @@
 
 <script>
   export default {
-    props: {
-      loggedIn: Boolean
-    },
-
     methods: {
       login () {
         this.loggedIn = true;
         this.$emit('userLoggedIn', this.loggedIn);
       }
-    }
+    },
+
+    data: () => ({
+      loggedIn: false,
+    })
   };
 </script>

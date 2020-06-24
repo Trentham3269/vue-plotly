@@ -54,9 +54,11 @@
           class="fill-height"
           fluid
         >
-        <v-row>
+        <v-row
+          dense
+        >
           <v-col
-            cols="4"
+            cols="6"
           >
             <v-select
               :items="options"
@@ -66,7 +68,7 @@
             ></v-select>
           </v-col>
           <v-col
-            cols="4"
+            cols="6"
           >
             <v-select
               :items="measures"
@@ -75,20 +77,46 @@
               outlined
             ></v-select>
           </v-col>
-          <v-col
-            cols="4"
-          >
-            <v-select
-              :items="themes"
-              v-model="theme"
-              label="Select heatmap theme"
-              outlined
-            ></v-select>
-          </v-col>
+        </v-row>
+        <v-row>
+          <template>
+            <v-card
+              flat
+              class="py-12"
+            >
+              <v-card-text>
+                <v-row
+                  align="center"
+                  justify="center"
+                >
+                  <v-btn-toggle
+                    v-model="theme"
+                    mandatory
+                  >
+                    <v-btn 
+                      value="YlGnBu"
+                    >
+                      Blues
+                    </v-btn>
+                    <v-btn value="Greens">
+                      Greens
+                    </v-btn>
+                    <v-btn value="Greys">
+                      Greys
+                    </v-btn>
+                    <v-btn value="Hot">
+                      Reds
+                    </v-btn>
+                  </v-btn-toggle>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </template>
         </v-row>
         <v-row
           align="center"
           justify="center"
+          dense
         >
           <v-col>
             <PlotlyChart 
@@ -171,11 +199,10 @@
       option: 'Entries',
       measures: ['Headcount', 'Percentage'],
       measure: 'Headcount',
-      themes: ['YlGnBu', 'RdBu', 'Greens', 'Greys', 'Electric', 'Earth', 'Portland', 'Picnic', 'Hot', 'YlOrRd'],
-      theme: 'YlGnBu',
+      theme: undefined,
       zEntries: EntriesCount,
       zExits: ExitsCount,
-      loggedIn: false
+      loggedIn: false,
     })
   };
 
