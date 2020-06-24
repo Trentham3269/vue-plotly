@@ -1,0 +1,24 @@
+{
+  "uuid": "111",
+  "traces": [
+    {
+      "z": [],
+      "x": [],
+      "y": [],
+      "type": "heatmap",
+      "hoverongaps": false,
+      "colorscale": []
+    }
+  ],
+  "layout": {
+    "dragmode": false, 
+    "autosize": true,
+    "showlegend": false,
+    "margin": {
+      "t": "40",
+      "l": "80",
+      "r": "40",
+      "b": "40"
+    }
+  }
+}

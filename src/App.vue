@@ -109,6 +109,7 @@
 <script>
   import PlotlyChart from './components/PlotlyChart';
   import LoginCard from './components/LoginCard';
+  import HeatmapConfig from './components/HeatmapConfig';
   import EntriesCount from './components/EntriesCount';
   import ExitsCount from './components/ExitsCount';
 
@@ -165,42 +166,7 @@
 
     data: () => ({
       drawer: false,
-      heatmap: {
-        uuid: "111",
-        traces: [
-          {
-            z: [],
-            x: [],
-            y: [],
-            type: 'heatmap',
-            hoverongaps: false,
-            colorscale: []
-          }
-        ],
-        layout: {
-          // width: 600,
-          // height: 600,
-          // xaxis: { ticksuffix: "%"},
-          dragmode: false, 
-          autosize: true,
-          // title: {
-          //  text: 'Chart title',
-          //  font: {
-          //    size: 16
-          //  },
-          //  xanchor: "center",
-          //  x: 0.5,
-          //  y: 0.99,
-          // },
-          showlegend: false,
-          margin: {
-            t: 40,
-            l: 80,
-            r: 40,
-            b: 40
-          }
-        }
-      },
+      heatmap: HeatmapConfig,
       options: ['Entries', 'Exits'],
       option: 'Entries',
       measures: ['Headcount', 'Percentage'],
