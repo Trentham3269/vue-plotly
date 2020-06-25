@@ -34,13 +34,12 @@
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
 
-    <v-main>
+    <v-main
+    >
       <template 
         v-if="loggedIn === false"
       >
-        <v-container
-          
-        >
+        <v-container>
           <LoginCard
             @userLoggedIn="loggedIn = $event"
           ></LoginCard>
@@ -50,69 +49,6 @@
       <template
         v-else
       >
-        <v-container
-          class="fill-height"
-          fluid
-        >
-        <v-row
-          dense
-        >
-          <v-col
-            cols="6"
-          >
-            <v-select
-              :items="options"
-              v-model="option"
-              label="Select movement type" 
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col
-            cols="6"
-          >
-            <v-select
-              :items="measures"
-              v-model="measure"
-              label="Select measure"
-              outlined
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-row>
-          <template>
-            <v-card
-              flat
-              class="py-12"
-            >
-              <v-card-text>
-                <v-row
-                  align="center"
-                  justify="center"
-                >
-                  <v-btn-toggle
-                    v-model="theme"
-                    mandatory
-                  >
-                    <v-btn 
-                      value="YlGnBu"
-                    >
-                      Blues
-                    </v-btn>
-                    <v-btn value="Greens">
-                      Greens
-                    </v-btn>
-                    <v-btn value="Greys">
-                      Greys
-                    </v-btn>
-                    <v-btn value="Hot">
-                      Reds
-                    </v-btn>
-                  </v-btn-toggle>
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </template>
-        </v-row>
         <v-row
           align="center"
           justify="center"
@@ -124,10 +60,59 @@
             ></PlotlyChart>
           </v-col>
         </v-row>
-        </v-container>
+
+        <v-spacer></v-spacer>
+
+        <v-toolbar>
+          <v-overflow-btn
+            v-model="option"
+            :items="options"
+            label="Direction"
+            hide-details
+            class="pa-0"
+            overflow
+          ></v-overflow-btn>
+
+            <template v-if="$vuetify.breakpoint.mdAndUp">
+              <v-divider vertical></v-divider>
+
+              <v-overflow-btn
+                v-model="measure"
+                :items="measures"
+                label="Measure"
+                hide-details
+                class="pa-0"
+                overflow
+              ></v-overflow-btn>
+
+              <v-divider vertical></v-divider>
+
+              <v-spacer></v-spacer>
+
+              <v-btn-toggle
+                v-model="theme"
+                mandatory
+                dense
+                group
+              >
+                <v-btn value="YlGnBu">
+                  Blues
+                </v-btn>
+                <v-btn value="Greens">
+                  Greens
+                </v-btn>
+                <v-btn value="Greys">
+                  Greys
+                </v-btn>
+                <v-btn value="Hot">
+                  Reds
+                </v-btn>
+              </v-btn-toggle>
+            </template>
+          </v-toolbar>  
+        
       </template>
     </v-main>
-
     <v-footer app>
       <span>&copy; 2020</span>
     </v-footer>
@@ -193,6 +178,24 @@
     },
 
     data: () => ({
+      dropdown_font: [
+          { text: 'Arial' },
+          { text: 'Calibri' },
+          { text: 'Courier' },
+          { text: 'Verdana' },
+        ],
+        dropdown_edit: [
+          { text: '100%' },
+          { text: '75%' },
+          { text: '50%' },
+          { text: '25%' },
+          { text: '0%' },
+        ],
+        toggle_exclusive: 2,
+        toggle_multiple: [1, 2, 3],
+
+
+
       drawer: false,
       heatmap: HeatmapConfig,
       options: ['Entries', 'Exits'],
@@ -211,3 +214,9 @@
   var x_exits = ['3-4pm', '4-5pm', '5-6pm', '6-7pm', '7-8pm'];
   var y_axis = ['Adelaide', 'Brisbane', 'Canberra', 'Darwin', 'Melbourne', 'Perth', 'Sydney'];
 </script>
+
+<style scoped>
+  #button_row {
+    height: 128px;
+  };
+</style>
