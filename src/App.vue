@@ -90,7 +90,16 @@
                 overflow
               ></v-overflow-btn>
 
-              <!-- <v-divider vertical></v-divider> -->
+              <v-divider vertical></v-divider>
+
+              <v-overflow-btn
+                v-model="date"
+                :items="dates"
+                label="Date"
+                hide-details
+                class="pa-0"
+                overflow
+              ></v-overflow-btn>
 
               <v-spacer></v-spacer>
 
@@ -184,30 +193,14 @@
     },
 
     data: () => ({
-      dropdown_font: [
-          { text: 'Arial' },
-          { text: 'Calibri' },
-          { text: 'Courier' },
-          { text: 'Verdana' },
-        ],
-        dropdown_edit: [
-          { text: '100%' },
-          { text: '75%' },
-          { text: '50%' },
-          { text: '25%' },
-          { text: '0%' },
-        ],
-        toggle_exclusive: 2,
-        toggle_multiple: [1, 2, 3],
-
-
-
       drawer: false,
       heatmap: HeatmapConfig,
       options: ['Entries', 'Exits'],
       option: 'Entries',
       measures: ['Headcount', 'Percentage'],
       measure: 'Headcount',
+      dates: ['2020-06-25', '2020-06-24', '2020-06-23', '2020-06-22', '2020-06-19', '2020-06-18'],
+      date: '2020-06-25',
       theme: undefined,
       zEntries: EntriesCount,
       zExits: ExitsCount,
@@ -220,9 +213,3 @@
   var x_exits = ['3-4pm', '4-5pm', '5-6pm', '6-7pm', '7-8pm'];
   var y_axis = ['Adelaide', 'Brisbane', 'Canberra', 'Darwin', 'Melbourne', 'Perth', 'Sydney'];
 </script>
-
-<style scoped>
-  #button_row {
-    height: 128px;
-  };
-</style>
