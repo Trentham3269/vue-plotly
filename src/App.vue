@@ -33,7 +33,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
-
+  
     <v-main
     >
       <template 
@@ -53,16 +53,21 @@
           align="center"
           justify="center"
           dense
+          class="pa-5"
         >
           <v-col>
             <PlotlyChart 
               :chart="heatmap"
+              class="pa-5"
             ></PlotlyChart>
           </v-col>
         </v-row>
 
         <v-spacer></v-spacer>
 
+        <v-row
+          class="px-5"
+        >
         <v-toolbar>
           <v-overflow-btn
             v-model="option"
@@ -85,7 +90,7 @@
                 overflow
               ></v-overflow-btn>
 
-              <v-divider vertical></v-divider>
+              <!-- <v-divider vertical></v-divider> -->
 
               <v-spacer></v-spacer>
 
@@ -110,9 +115,10 @@
               </v-btn-toggle>
             </template>
           </v-toolbar>  
-        
+        </v-row>
       </template>
     </v-main>
+
     <v-footer app>
       <span>&copy; 2020</span>
     </v-footer>
